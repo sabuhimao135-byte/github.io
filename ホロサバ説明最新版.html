@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ホロゲー基地 — HOLO BASE</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      background: #0f0f13;
+      color: #e8e8f0;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ヒーロー */
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(160deg, #1a1a2e 0%, #16213e 40%, #0f0f13 100%);
+      padding: 60px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(114, 137, 218, 0.15) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(114, 137, 218, 0.2);
+      color: #a5b4fc;
+      font-size: 0.85rem;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+      letter-spacing: 0.05em;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 3.4rem);
+      font-weight: 700;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #e0e7ff, #c7d2fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero .subtitle {
+      font-size: 1.2rem;
+      color: #a5b4fc;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .hero .catch {
+      font-size: 1.15rem;
+      color: #d4d4e8;
+      margin-bottom: 36px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #5865F2;
+      color: white;
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 600;
+      padding: 16px 36px;
+      border-radius: 12px;
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 24px rgba(88, 101, 242, 0.35);
+    }
+
+    .btn:hover {
+      background: #4752c4;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(88, 101, 242, 0.45);
+    }
+
+    /* セクション共通 */
+    section {
+      padding: 80px 0;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 28px;
+      text-align: center;
+      color: #e0e7ff;
+    }
+
+    .section-text {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 40px;
+      color: #b0b0c4;
+      font-size: 1.05rem;
+    }
+
+    /* 特徴 */
+    .features {
+      background: #13131a;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      justify-items: center;
+    }
+
+    .feature-card {
+      background: #1c1c28;
+      border: 1px solid #2a2a3a;
+      border-radius: 16px;
+      padding: 28px 24px;
+      transition: border-color 0.2s;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .feature-card:hover {
+      border-color: #5865F2;
+    }
+
+    .feature-card .icon {
+      font-size: 1.8rem;
+      margin-bottom: 14px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+      color: #c7d2fe;
+    }
+
+    .feature-card p {
+      color: #a0a0b4;
+      font-size: 0.95rem;
+    }
+
+    /* 下の2つを中央に寄せるための調整 */
+    .feature-card:nth-child(4) {
+      grid-column: 1 / 2;
+      justify-self: end;
+    }
+
+    .feature-card:nth-child(5) {
+      grid-column: 2 / 3;
+      justify-self: start;
+    }
+
+    /* おすすめ */
+    .recommend {
+      background: #0f0f13;
+    }
+
+    .recommend-list {
+      max-width: 640px;
+      margin: 0 auto;
+      list-style: none;
+    }
+
+    .recommend-list li {
+      background: #1c1c28;
+      border: 1px solid #2a2a3a;
+      border-radius: 12px;
+      padding: 16px 22px;
+      margin-bottom: 12px;
+      color: #c4c4d4;
+      font-size: 1.02rem;
+    }
+
+    .recommend-list li::before {
+      content: "✦ ";
+      color: #a5b4fc;
+    }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      padding: 90px 20px;
+      background: linear-gradient(180deg, #13131a 0%, #0f0f13 100%);
+    }
+
+    .cta h2 {
+      margin-bottom: 16px;
+    }
+
+    .cta p {
+      color: #a0a0b4;
+      margin-bottom: 36px;
+      font-size: 1.05rem;
+    }
+
+    /* フッター */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #666680;
+      font-size: 0.85rem;
+      border-top: 1px solid #1e1e2a;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 800px) {
+      .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .feature-card:nth-child(4),
+      .feature-card:nth-child(5) {
+        grid-column: auto;
+        justify-self: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        min-height: 80vh;
+        padding: 40px 16px;
+      }
+      section {
+        padding: 60px 0;
+      }
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ヒーロー -->
+  <header class="hero">
+    <div class="badge">非公式ファンコミュニティ</div>
+    <h1>ホロゲー基地</h1>
+    <p class="subtitle">HOLO BASE</p>
+    <p class="catch">ホロリスが集う、ゲームの拠点。</p>
+    <a href="https://discord.gg/MFvWupKyFE" class="btn" target="_blank" rel="noopener">
+      Discordに参加する
+    </a>
+  </header>
+
+  <!-- サーバー紹介 -->
+  <section>
+    <div class="container">
+      <h2>このサーバーについて</h2>
+      <p class="section-text">
+        HOLO BASEは、ホロライブが好きな人たちが集まり、<br>
+        ゲームや雑談を通じて交流する非公式ファンコミュニティです。<br><br>
+        🎵 ホロライブドリームス<br>
+        🀄 ホロ麻雀（ホロじゃん）<br>
+        🎮 ホロメンが手がけるSwitchゲーム<br><br>
+        これらのゲームを中心に、マルチ募集や攻略情報の共有、<br>
+        一緒に遊ぶ仲間探しなどを楽しめます！
+      </p>
+    </div>
+  </section>
+
+  <!-- 特徴 -->
+  <section class="features">
+    <div class="container">
+      <h2>ホロゲー基地の特徴</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon">🎙️</div>
+          <h3>VCあり・専用VCも作れる</h3>
+          <p>公式サーバーとは違いボイスチャットが使えます。自分専用のVCも気軽に作成可能です。</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📂</div>
+          <h3>カテゴリー分けがしっかり</h3>
+          <p>ジャンルごとにカテゴリーを分けているので、話が混ざる心配がありません。</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🚫</div>
+          <h3>ネタバレ対策済み</h3>
+          <p>ネタバレOKチャンネルとNGチャンネルを分けているので、安心して楽しめます。</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🎮</div>
+          <h3>専用ロール完備</h3>
+          <p>各ゲーム・ジャンルごとに専用ロールを用意。興味のある人とすぐにつながれます。</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🛡️</div>
+          <h3>すぐ対応・連絡しやすい</h3>
+          <p>何かあればすぐに運営に伝えられます。安心して楽しめる環境を大切にしています。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- おすすめの人 -->
+  <section class="recommend">
+    <div class="container">
+      <h2>こんな人におすすめ！</h2>
+      <ul class="recommend-list">
+        <li>ホロライブが好き！</li>
+        <li>ホロドリやホロじゃんを一緒に遊ぶ仲間がほしい！</li>
+        <li>ホロメンのゲームについて語りたい！</li>
+        <li>推しやホロライブの話ができる友達を作りたい！</li>
+        <li>ゲーム初心者だけど、気軽に参加してみたい！</li>
+      </ul>
+      <p class="section-text" style="margin-top: 36px;">
+        初心者も、古参のホロリスも大歓迎！<br>
+        ゲームをよく遊ぶ人も、雑談中心の人も、自分のペースで楽しんでいこう。<br>
+        みんなが安心して交流できる、居心地のいい場所を目指しています。
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+      <h2>遊んで、語って、つながろう。</h2>
+      <p>ここが、あなたのHOLO BASE。</p>
+      <a href="https://discord.gg/MFvWupKyFE" class="btn" target="_blank" rel="noopener">
+        Discordに参加する
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>ホロゲー基地 — HOLO BASE</p>
+    <p style="margin-top: 8px;">※当サーバーは非公式のファンコミュニティであり、ホロライブ公式とは関係ありません。</p>
+  </footer>
+
+</body>
+</html>
